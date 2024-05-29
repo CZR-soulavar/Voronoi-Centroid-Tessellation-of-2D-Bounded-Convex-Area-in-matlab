@@ -1,0 +1,19 @@
+function[farpre,faraft]=Calculation(R,midpre,midaft)
+  vorx=R{4,1};
+  vorxpre=vorx(1,:);
+  vorxaft=vorx(2,:);
+  k1=(midpre(1,2)-vorxpre(1,2))/((midpre(1,1)-vorxpre(1,1)));
+  k2=(midaft(1,2)-vorxaft(1,2))/((midaft(1,1)-vorxaft(1,1)));
+  b1=midpre(1,2)-k1*midpre(1,1);
+  b2=midaft(1,2)-k2*midaft(1,1);
+  x=(b2-b1)/(k1-k2);
+  y=k1*x+b1;
+  jiaodian=[x,y];
+  relativepre=vorxpre-jiaodian;
+  relativeaft=vorxaft-jiaodian;
+  thetapre=atan2(relativepre(1,2),relativepre(1,1));
+  thetaaft=atan2(relativeaft(1,2),relativeaft(1,1));
+  r=10^12;
+  farpre=[r*cos(thetapre),r*sin(thetapre)]+jiaodian;
+  faraft=[r*cos(thetaaft),r*sin(thetaaft)]+jiaodian;
+end
